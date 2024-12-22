@@ -3,11 +3,15 @@ import {createGame, endGame, endRound, initLobby, initRound, playRound, setReady
 let player_number = 0;
 let answer_open = false;
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
     const board = document.querySelector(".board");
     console.log("coucou")
     createGame(board);
-    const websocket = new WebSocket("ws://192.168.0.100:8001");
+
+    // Load configuration
+    const response = await fetch('config.json');
+    const config = await response.json();
+    const websocket = new WebSocket(config.websocket_url);
 
     init_game(websocket);
     receive_round(websocket, board);
