@@ -103,7 +103,13 @@ function createGame(board) {
         const inputElement = document.querySelector(".lobby_join_input");
         window.location.href = "?join=" + inputElement.value;
     });
-    lobbyJoinElement.append(lobbyJoinCodeElement, lobbyJoinButtonElement);
+    const newLobbyButtonElement = document.createElement("button");
+    newLobbyButtonElement.className = "action button new_lobby_button";
+    newLobbyButtonElement.innerText = "Nouveau lobby";
+    newLobbyButtonElement.addEventListener("click", () => {
+        window.location.href = "/";
+    });
+    lobbyJoinElement.append(lobbyJoinCodeElement, lobbyJoinButtonElement, newLobbyButtonElement);
     qcmElement.append(lobbyJoinElement);
 
     board.append(qcmElement);

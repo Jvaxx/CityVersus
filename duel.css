@@ -161,21 +161,24 @@ body {
     font-size: 1em;
 }
 
-.button {
+.lobby_join_button, .new_lobby_button {
     flex: 1;
-    padding: 0.5em 1em;
+    background-color: #4CAF50; /* Green */
     border: none;
-    border-radius: 0.5em;
-    background-color: #4caf50;
     color: white;
-    font-size: 1em;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8em;
     cursor: pointer;
+    margin-left: 10px;
+    border-radius: 0.5em;
 }
 
-.button:hover {
+.lobby_join_button:hover, .new_lobby_button:hover {
     background-color: #45a049;
 }
-
 
 /* winnder display */
 .winner {
