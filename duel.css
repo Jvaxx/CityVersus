@@ -163,6 +163,7 @@ body {
 
 .lobby_join_button, .new_lobby_button, .replay_button{
     flex: 1;
+    flex-wrap: wrap;
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
