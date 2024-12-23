@@ -1,6 +1,5 @@
 import json
 import random
-import time
 
 ROUND_MULTIPLICATOR = 2
 TIME_MULTIPLICATOR = 0.03
