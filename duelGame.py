@@ -155,6 +155,19 @@ class DuelGame:
         self._initialize_round()
         return self.get_life
 
+    def reset_game(self):
+        self.players_life = [5000, 5000]
+        self.countdown = 10
+        self.active_capital = {}
+        self.active_propositions = []
+        self.has_played = [False, False]
+        self.time_of_answer = [0, 0]
+        self.good_answer = [False, False]
+        self.round_number = 0
+        self.players_ready = [False, False]
+        self.last_damages = [0, 0]
+        self._initialize_round()
+
 
 
 # game = DuelGame()

@@ -85,6 +85,13 @@ async def init_round(connected, game):
     }
     broadcast(connected, json.dumps(event))
 
+async def reset_game(connected, game):
+    game.reset_game()
+    event = {
+        "type": "reset_game",
+    }
+    broadcast(connected, json.dumps(event))
+
 
 async def player_handler(connected, websocket, player, data_received, game):
     """
@@ -119,6 +126,8 @@ async def player_handler(connected, websocket, player, data_received, game):
             else:
                 print("Fin de la partie")
                 await send_game_end(connected, game.get_winner, game.players_life)
+    if data_received["type"] == "replay":
+        await reset_game(connected, game)
 
 
 async def start(websocket):

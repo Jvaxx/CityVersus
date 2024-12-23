@@ -161,7 +161,7 @@ body {
     font-size: 1em;
 }
 
-.lobby_join_button, .new_lobby_button {
+.lobby_join_button, .new_lobby_button, .replay_button{
     flex: 1;
     background-color: #4CAF50; /* Green */
     border: none;
@@ -176,9 +176,14 @@ body {
     border-radius: 0.5em;
 }
 
-.lobby_join_button:hover, .new_lobby_button:hover {
+.lobby_join_button:hover, .new_lobby_button:hover, .replay_button:hover {
     background-color: #45a049;
 }
+
+.replay_button {
+    margin-top: 1em;
+}
+
 
 /* winnder display */
 .winner {

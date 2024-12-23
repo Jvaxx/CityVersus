@@ -1,4 +1,14 @@
-import {createGame, endGame, endRound, initLobby, initRound, playRound, setReady, startTimer} from "./duel.js";
+import {
+    createGame,
+    endGame,
+    endRound,
+    initLobby,
+    initRound,
+    playRound,
+    resetGame,
+    setReady,
+    startTimer
+} from "./duel.js";
 
 let player_number = 0;
 let answer_open = false;
@@ -39,9 +49,14 @@ function init_game(websocket) {
 function sendAnswer(websocket, board) {
     board.addEventListener("click", ({target}) => {
         const answer_id = target.dataset.id;
-        if (answer_id === undefined || !answer_open) {
+        if (answer_id === "replay"){
+            const message = {"type": "replay"};
+            websocket.send(JSON.stringify(message));
+            return;
+        } else if (answer_id === undefined || !answer_open) {
             return;
         }
+
         playRound(board, player_number, answer_id);
         answer_open = false;
         const message = {"type": "answer", "geoname_id": answer_id};
@@ -81,6 +96,9 @@ function receive_round(websocket, board) {
                 break;
             case "game_end":
                 endGame(board, message.winner, message.players_life);
+                break;
+            case "reset_game":
+                resetGame(board);
                 break;
             default:
                 break;

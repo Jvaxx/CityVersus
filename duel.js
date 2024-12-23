@@ -148,7 +148,8 @@ function initRound(board, question, propositions, players_life, round_number) {
     // timer reset
     clearInterval(intervalID);
     const timerElement = board.querySelector(".timer");
-    timerElement.classList.add("empty");
+    timerElement.classList.remove("empty");
+    timerElement.innerText = "En attente de la première réponse..."
 
     // hide ready state
     const statusElements = board.querySelectorAll(".player_status");
@@ -189,8 +190,7 @@ function endRound(board, correct_id, last_damages) {
     // timer reset
     clearInterval(intervalID);
     const timerElement = board.querySelector(".timer");
-    timerElement.classList.add("empty");
-
+    timerElement.innerText = "En attente de la première réponse..."
     // show answer
     const correctElement = board.querySelector(".proposition[data-id='" + correct_id + "']");
     correctElement.classList.add("correct");
@@ -224,6 +224,7 @@ function endGame(board, winner, players_life) {
     winnerElement.className = "winner";
     winnerElement.innerText = "Vainqueur: " + winner;
     const timerElement = board.querySelector(".timer");
+    timerElement.classList.add("empty");
     qcmWrapperElement.insertBefore(winnerElement, timerElement.nextSibling);
 
     // update life indicators
@@ -233,6 +234,68 @@ function endGame(board, winner, players_life) {
         playerLifeElement.classList.remove("empty");
     });
 
+    // create and append "rejouer" button
+    const replayButtonElement = document.createElement("button");
+    replayButtonElement.className = "action button replay_button";
+    replayButtonElement.innerText = "Rejouer";
+    replayButtonElement.dataset.id = "replay";
+    qcmWrapperElement.append(replayButtonElement);
+
+}
+
+function resetGame(board) {
+    // Reset player statuses
+    const statusElements = board.querySelectorAll(".player_status");
+    statusElements.forEach((element) => {
+        element.classList.remove("ready", "empty");
+        element.classList.add("not_ready");
+        element.innerText = "Pas prêt";
+    });
+
+    // Reset player lives
+    const playerLifeElements = board.querySelectorAll(".player_life");
+    playerLifeElements.forEach((element) => {
+        element.classList.add("empty");
+        element.innerText = "";
+    });
+
+    // Reset round number
+    const roundElement = board.querySelector(".round_number");
+    roundElement.classList.add("empty");
+    roundElement.innerText = "";
+
+    // Reset question
+    const questionElement = board.querySelector(".question_text");
+    questionElement.classList.remove("empty");
+    questionElement.innerText = "En attente des joueurs...";
+    const questionBlocElement = board.querySelector(".question");
+    questionBlocElement.classList.remove("empty");
+
+    // Reset timer
+    const timerElement = board.querySelector(".timer");
+    timerElement.classList.add("empty");
+    timerElement.innerText = "";
+
+    // Reset propositions
+    const propositionsElements = board.querySelectorAll(".proposition");
+    propositionsElements.forEach((element) => {
+        element.classList.add("empty");
+        element.classList.remove("selected", "correct");
+        element.innerText = "Proposition";
+        element.dataset.id = 0;
+    });
+
+    // Reset winner display
+    const winnerElement = board.querySelector(".winner");
+    if (winnerElement) {
+        winnerElement.remove();
+    }
+
+    // Reset damages
+    const damageElements = board.querySelectorAll(".damage");
+    damageElements.forEach((element) => {
+        element.remove();
+    });
 }
 
 
@@ -260,4 +323,4 @@ function startTimer(board, countdown) {
 }
 
 
-export {createGame, playRound, initRound, setReady, startTimer, initLobby, endRound, endGame};
+export {createGame, playRound, initRound, setReady, startTimer, initLobby, endRound, endGame, resetGame};
