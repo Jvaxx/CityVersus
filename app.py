@@ -5,6 +5,7 @@ import asyncio
 import secrets
 import json
 from websockets.asyncio.server import serve, broadcast
+import ssl
 
 JOIN = {}
 
@@ -96,6 +97,7 @@ async def reset_game(connected, game):
 async def player_handler(connected, websocket, player, data_received, game):
     """
     Handles the players
+    :param game: the python class instance
     :param connected:
     :param websocket:
     :param player:
@@ -172,6 +174,9 @@ async def join(websocket, join_key):
         connected.remove(websocket)
 
 
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+ssl_context.load_cert_chain(certfile="/etc/letsencrypt/live/srv677527.hstgr.cloud/fullchain.pem", keyfile="/etc/letsencrypt/live/srv677527.hstgr.cloud/privkey.pem")
+
 async def handler(websocket):
     message = await websocket.recv()
     print(message)
@@ -184,7 +189,7 @@ async def handler(websocket):
 
 
 async def main():
-    async with serve(handler, "", 8001) as server:
+    async with serve(handler, "0.0.0.0", 8000, ssl=ssl_context) as server:
         await server.serve_forever()
 
 

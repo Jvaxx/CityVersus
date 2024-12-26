@@ -1,3 +1,3 @@
 {
-  "websocket_url": "ws://localhost:8001"
+  "websocket_url": "wss://srv677527.hstgr.cloud:8000/ws/"
 }
